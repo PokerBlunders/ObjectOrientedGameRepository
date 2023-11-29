@@ -109,12 +109,19 @@ void restartGame() {
 
 void keyPressed() {
   // When the 'space' bar is pressed the player will jump
-  if (key == ' ' && !player.isJumping() && gameRunning) {
-    player.jump();
-  }
+  switch(key) {
+    case ' ':
+      if (!player.isJumping() && gameRunning) {
+        player.jump();
+      }
+      break;
 
   // When the 'R' key is pressed the game will restart
-  if ((key == 'R' || key == 'r') && !gameRunning) {
-    restartGame();
+   case 'R':
+    case 'r':
+      if (!gameRunning) {
+        restartGame();
+      }
+      break;
   }
 }
