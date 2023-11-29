@@ -1,0 +1,5 @@
+19. What’s the difference between a for loop and a while loop?
+Answer: A for loops is used when the number of iterations is known, it has a spot to tell how many times you want that block to execute. Where as a while loop is used when the numeber of iterations is dependant on a condition being true. It will continue to run until the condition is no longer true.
+
+22. What’s the difference between parameters and arguments?
+Answer: Parameters are essentially placeholders in a function declaration, they define the inputs the function would expect. On the otherhand, arguments are the actual values that get passed along to the function when it is called.
