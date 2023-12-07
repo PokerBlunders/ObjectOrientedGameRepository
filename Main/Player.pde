@@ -14,6 +14,8 @@ class Player {
     if (jumping) {
       y += ySpeed;
       ySpeed += 0.5;
+      
+      y = constrain(y, 15, groundLevel);
 
       if (y >= groundLevel) {
         y = groundLevel;
@@ -24,7 +26,7 @@ class Player {
   }
 
   void display() {
-    fill(255, 0, 0);
+    fill(255, 0, 255);
     ellipse(x, y, 30, 30);
   }
 
@@ -50,11 +52,12 @@ class Player {
   }
 
   void jump() {
-    if (!jumping) {
+    if (gameRunning) {
       jumping = true;
       ySpeed = -10;
     }
   }
+
 
   boolean isJumping() {
     return jumping;

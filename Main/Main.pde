@@ -1,9 +1,16 @@
 Player player;
+Background background;
 int groundLevel;
+int jumpCount = 0;
 ArrayList<Obstacle> obstacles;
 ArrayList<Platform> platforms;
 boolean gameRunning = true;
 PFont Font;
+float obstacleSpeed = 5; // Initial speed
+float platformSpeed = 5; // Initial speed
+float speedMultiplier = 1.0002; // Speed multiplier
+int distanceTraveled = 0;
+int finalScore;
 
 void setup() {
   size(800, 400);
@@ -12,13 +19,17 @@ void setup() {
   player = new Player(100, groundLevel);
   obstacles = new ArrayList<Obstacle>();
   platforms = new ArrayList<Platform>();
+  background = new Background();
   Font = createFont("Arial Bold", 60);
 }
 
 void draw() {
-  background(200);
+  background(0);
 
   if (gameRunning) {
+    
+    background.update();
+    drawBackground();
   
     fill(100, 250, 100);
     rect(0, groundLevel, width, height - groundLevel);
@@ -28,13 +39,13 @@ void draw() {
     player.display();
 
     // Check for obstacles and collisions
-    if (random(1) < 0.01) {
-      obstacles.add(new Obstacle(width, groundLevel - 15, 20, 15));
+    if (random(1) < 0.02) {
+      obstacles.add(new Obstacle(width, groundLevel- int(random(15,350)), 20, int(random(20,100)), obstacleSpeed));
     }
 
     // Check for platforms
     if (random(1) < 0.01) {
-      platforms.add(new Platform(width, groundLevel - int(random(20, 50)), int(random(50, 100)), 10));
+      platforms.add(new Platform(width, groundLevel - int(random(20, 300)), int(random(50, 100)), 10, platformSpeed));
     }
 
     // Move and draw obstacles
@@ -68,7 +79,24 @@ void draw() {
         platforms.remove(i);
       }
     }
+    obstacleSpeed *= speedMultiplier;
+    platformSpeed *= speedMultiplier;
+    
+    // Update distance traveled
+    distanceTraveled += (0.2 * obstacleSpeed);
+  
   }
+  
+   // Display distance traveled on the top right
+  textSize(16);
+  fill(255);
+  textAlign(RIGHT, TOP);
+  text("Distance: " + nf(distanceTraveled, 0, 0), width - 10, 10);
+  
+}
+
+void drawBackground() {
+  background.display();
 }
 
 void gameOver() {
@@ -85,6 +113,11 @@ void gameOver() {
   fill(255, 0, 0);
   text("GAME OVER", width/2, height/2 - 50);
   
+  finalScore = distanceTraveled;
+    textSize(30);
+    fill(255);
+    text("Distance Travelled: " + nf(finalScore, 0, 0), width/2, height/2);
+  
   // Set text properties for "Press" to white
   textSize(20);
   fill(255);
@@ -97,6 +130,10 @@ void gameOver() {
   // Set text properties for "to Reset" to white
   fill(255); // Set text color back to black
   text(" to Reset", width/2 + 32, height/2 + 50); // Adjust the position as needed
+  
+  obstacleSpeed = 5;
+  platformSpeed = 5;
+  
 }
 
 void restartGame() {
@@ -105,14 +142,20 @@ void restartGame() {
   player.reset(100, groundLevel);
   obstacles.clear();
   platforms.clear();
+  distanceTraveled = 0;
+  
 }
 
 void keyPressed() {
   // When the 'space' bar is pressed the player will jump
   switch(key) {
     case ' ':
-      if (!player.isJumping() && gameRunning) {
+      if (jumpCount < 2) {
         player.jump();
+        jumpCount++;
+      }
+       if (player.jumping){
+          jumpCount = 0;
       }
       break;
 
@@ -124,4 +167,5 @@ void keyPressed() {
       }
       break;
   }
+  
 }
