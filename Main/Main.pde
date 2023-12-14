@@ -1,3 +1,20 @@
+/*
+Designer: Nathan Tatti (id:991607556)
+Instructor: Kit Barry
+December 14, 2023
+
+|-----Object Oriented Game-----|
+ 
+How to play:
+     - Avoid RED vertical bars
+     - WHITE horizontal bars are platforms you can land on
+     - Use 'SPACEBAR' to jump/fly
+ 
+Credits:
+    Galaxy Background - https://www.behance.net/gallery/104360973/Galaxy-Backgrounds
+    Spaceship - https://dribbble.com/shots/1658999-Space-ship-Game-Character-Sprite-Sheet-Animation#
+*/
+
 Player player;
 Background background;
 int groundLevel;
@@ -9,20 +26,27 @@ PFont Font;
 float obstacleSpeed = 5; // Initial speed
 float platformSpeed = 5; // Initial speed
 float speedMultiplier = 1.0002; // Speed multiplier
-int distanceTraveled = 0;
+int distanceTraveled = 0; //Counter starts at 0
 int finalScore;
 PImage galexy;
+PImage blackhole;
 
 void setup() {
   size(800, 400);
   frameRate(60);
   groundLevel = height - 50;
-  player = new Player(100, groundLevel);
+  player = new Player(100, groundLevel); //Player starts on ground level
   obstacles = new ArrayList<Obstacle>();
   platforms = new ArrayList<Platform>();
   background = new Background();
   Font = createFont("Arial Bold", 60);
   galexy = loadImage("galexy.png");
+  blackhole = loadImage("blackhole.png");
+  
+  //Instructions to help users
+  println("Avoid RED vertical bars.");
+  println("WHITE horizontal bars are platforms you can land on.");
+  println("Use 'SPACEBAR' to jump/fly");
 }
 
 void draw() {
@@ -33,9 +57,6 @@ void draw() {
     
     background.update();
     drawBackground();
-  
-    fill(100, 250, 100);
-    rect(0, groundLevel, width, height - groundLevel);
 
     // Update and draw player
     player.update();
@@ -103,17 +124,18 @@ void draw() {
   
 }
 
+//Function to make the start screen
 void drawStartScreen() {
-  background(0); // Set the background color
-  image(galexy, 0, 0);
+  background(0);
+  image(galexy, 0, 0);//Makes the background a galaxy
 
   // Draw the start button
-  fill(255); // White color
+  fill(255);
   rectMode(CENTER);
-  rect(width / 2, height / 2, 150, 50, 20); // Adjust the size of the start button
+  rect(width / 2, height / 2, 150, 50, 20);
 
   // Draw text on the start button
-  fill(0); // Black color
+  fill(0);
   textSize(20);
   textAlign(CENTER, CENTER);
   text("Start", width / 2, height / 2);
@@ -122,7 +144,7 @@ void drawStartScreen() {
   if (mouseX > width / 2 - 75 && mouseX < width / 2 + 75 && mouseY > height / 2 - 25 && mouseY < height / 2 + 25) {
     fill(0); // highlighting when the mouse is over the button
     rect(width / 2, height / 2, 150, 50, 20);
-    fill(255); // White color
+    fill(255);
     text("Start", width / 2, height / 2);
     
     rectMode(CORNER);
@@ -133,6 +155,7 @@ void drawStartScreen() {
     }
   }
   
+  //Writes out the title and author with backdrops for added effect
   fill(0);
   textSize(60);
   textFont(Font);
@@ -161,49 +184,67 @@ void drawStartScreen() {
   
   fill(0);
   textSize(15);
-  text("Made by: Nathan Tatti", width / 2+2, height / 2 + 53);
+  text("Made by: Nathan Tatti", width / 2+2, height / 2 + 73);
 
   fill(255);
-  text("Made by: Nathan Tatti", width / 2, height / 2 + 50);
+  text("Made by: Nathan Tatti", width / 2, height / 2 + 70);
 }
 
 
-// Draws background
+// Draws background with stars
 void drawBackground() {
   background.display();
 }
 
-//Function for the game over state
+//Function for the gameover state
 void gameOver() {
   gameRunning = false;
   obstacles.clear(); // Clears all obstacles currently displayed
   platforms.clear(); // Clears all platforms currently displayed
   noLoop(); // Stop the loop
-  fill(0);
-  rect(0,0,800,400);
+  image(blackhole, 0, 0, 800, 400);//Makes the background a blackhole
   textAlign(CENTER, CENTER);
   textFont(Font);
   
+  
+  //Adds a backdrop to the "GAME OVER" wording
+  fill(100,0,0);
+  text("GAME OVER", width/2+3, height/2 - 47);
   // Display "GAME OVER" in the middle of the screen in red
   fill(255, 0, 0);
   text("GAME OVER", width/2, height/2 - 50);
   
+  //Writes the distance travelled with a darker backdrop
   finalScore = distanceTraveled;
     textSize(30);
+    fill(70);
+    text("Distance Travelled: " + nf(finalScore, 0, 0), width/2+3, height/2+3);
+    
     fill(255);
     text("Distance Travelled: " + nf(finalScore, 0, 0), width/2, height/2);
   
-  // Set text properties for "Press" to white
+  // Set text properties for "Press" with a backdrop
   textSize(20);
+  
+  fill(70);
+  text("Press ", width/2 - 50, height/2 + 53);
+  
   fill(255);
   text("Press ", width/2 - 52, height/2 + 50); // Display "Press " in black
   
-  // Set text properties for "R" to yellow
+  // Set text properties for "R" with a backdrop
+  
+  fill(100,100,0); 
+  text("R", width/2 + -14, height/2 + 53);
+  
   fill(255,255,0); 
   text("R", width/2 + -16, height/2 + 50); // Adjust the position as needed
   
-  // Set text properties for "to Reset" to white
-  fill(255); // Set text color back to black
+  // Set text properties for "to Reset" with a backdrop
+  fill(70);
+  text(" to Reset", width/2 + 34, height/2 + 53);
+  
+  fill(255);
   text(" to Reset", width/2 + 32, height/2 + 50); // Adjust the position as needed
   
   //Resets obstacle and platform speeds back to default
@@ -216,10 +257,10 @@ void gameOver() {
 void restartGame() {
   gameRunning = true;
   loop(); // Restart the game loop
-  player.reset(100, groundLevel);
-  obstacles.clear();
-  platforms.clear();
-  distanceTraveled = 0;
+  player.reset(100, groundLevel); //Sets player back to the default location
+  obstacles.clear(); //Removes all obstacles on the screen
+  platforms.clear(); //Removes all platforms on the screen
+  distanceTraveled = 0; //Resets distance travelled back to 0
   
 }
 
