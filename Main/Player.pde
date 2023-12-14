@@ -2,12 +2,19 @@ class Player {
   float x, y;
   float ySpeed;
   boolean jumping;
+  PImage shipForward;
+  PImage shipUp;
+  PImage shipDown;
 
   Player(float x, float y) {
     this.x = x;
     this.y = y;
     this.ySpeed = 0;
     this.jumping = false;
+    
+    shipForward = loadImage("ShipForward.png");
+    shipUp = loadImage("ShipUp.png");
+    shipDown = loadImage("ShipDown.png");
   }
 
   void update() {
@@ -26,8 +33,14 @@ class Player {
   }
 
   void display() {
-    fill(255, 0, 255);
+    
+    fill(0);
+    ellipse(x, y, 33, 33);
+    fill(0, 255, 255);
     ellipse(x, y, 30, 30);
+    
+    
+    
   }
 
   boolean checkCollision(Obstacle obs) {
@@ -47,7 +60,6 @@ class Player {
     if (x + 15 > platform.getX() && x - 15 < platform.getX() + platform.getWidth() && playerBottom > platformTop && y < platformBottom) {
       return true;
     }
-
     return false;
   }
 
@@ -58,7 +70,6 @@ class Player {
     }
   }
 
-
   boolean isJumping() {
     return jumping;
   }
@@ -68,7 +79,7 @@ class Player {
       float playerBottom = y + 15;
       float platformTop = platform.getY();
       
-        if (playerBottom > platform.getY() ) {
+        if (playerBottom > platformTop) {
         jumping = false;
         ySpeed = 0;
         y = platformTop - 15; // Adjust the player's position to be just above the platform

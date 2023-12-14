@@ -15,7 +15,9 @@
   }
 
   void display() {
-    fill(0, 0, 255);
+    fill(0);
+    rect(x-2, y-2, width+4, height+4);
+    fill(255, 50, 50);
     rect(x, y, width, height);
   }
 

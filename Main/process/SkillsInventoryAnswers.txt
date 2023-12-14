@@ -3,3 +3,24 @@ Answer: A for loops is used when the number of iterations is known, it has a spo
 
 22. What’s the difference between parameters and arguments?
 Answer: Parameters are essentially placeholders in a function declaration, they define the inputs the function would expect. On the otherhand, arguments are the actual values that get passed along to the function when it is called.
+
+25. What’s the difference between a class and an object?
+Answer: A class serves as a blueprint or a template that outlines both the structure and behavior of objects. It contains both data and methods which can be used to create instances of objects. On the other hand an object represents an instance of a class embodying a unique entity within the program. While a class establishes the properties and behaviors shared by all objects of that type, an object is an implementation of those specifications with its distinct values for the class's attributes.
+
+26. What is a constructor function? What does it do and when?
+Answer: A constructor function plays a role within a class by being called when an object is created from that class. Its main purpose is to set up the attributes or properties of the object and establish any conditions. Constructors normally have parameters that represent values for the objects attributes allowing for customization during the creation of the object. They are important to ensure that objects begin with predefined states which helps the class operate correctly.
+
+27. Why should each class have its own tab in Processing?
+Answer: When you organize each class in its own tab it really helps make the code clear and easy to maintain. It also makes your code more readable by separating functionalities into their own space. Additionally it promotes an understandable code structure. It's great for reusing code because you can easily import classes into other projects. It makes debugging and maintaining the code efficient especially when working on collaborative projects where team members can simultaneously work on different classes without causing any problems.
+
+31. What’s the difference between an array and an ArrayList?
+Answer: The main difference between an array and an ArrayList is in their flexibility and functionality. An array is a data structure of a fixed size that stores elements of the type in order. Once its size is determined it cannot be easily altered. On the hand an ArrayList is a collection that can change its size and store elements of different types. ArrayLists can shrink and lengthen as needed making them more adaptable for situations where the collections size may vary.
+
+32. Why would you want to go through a list backwards, decrementing the index?
+Answer: When you're working with lists and you need to modify or delete elements while iterating, it can be helpful to go backward through the list by decrementing the index. This approach prevents results and errors caused by changing the size of the list while iterating forward. It's especially useful when implementing algorithms that involve removing or updating elements based on conditions.
+
+37. When should you use PVector instead of float variables?
+Answer: When working with operations that involve both magnitude and direction such, as movement or forces in a 2D or 3D space it's beneficial to use PVector. PVector is a class that represents a vector and offers convenient methods for common vector operations like addition subtraction, normalization and scaling. By using PVector the code becomes simpler as it encapsulates both the magnitude and direction within an object. This makes it more intuitive to work with transformations improves code readability reduces the chances of errors and promotes an more modular design.
+
+42. What is a normalized vector, why is it useful?
+Answer: A normalized vector is a vector that has been adjusted to have a magnitude of 1 while keeping its direction intact. Normalization involves dividing each component of the vector by its magnitude. Normalized vectors are used in scenarios in graphics and physics simulations. They offer a way to represent and manipulate direction without being affected by the vectors scale.

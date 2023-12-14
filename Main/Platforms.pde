@@ -11,7 +11,9 @@
   }
 
   void display() {
-    fill(150, 75, 0);
+    fill(0);
+    rect(x-2, y-2, width+4, height+4);
+    fill(255);
     rect(x, y, width, height);
     x -= speed;
   }
